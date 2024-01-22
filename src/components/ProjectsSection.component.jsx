@@ -4,7 +4,11 @@ import React from "react";
 import {
   faComputer,
   faFolder,
+  faGraduationCap,
+  faLaptop,
+  faLaptopCode,
   faPencil,
+  faStamp,
 } from "@fortawesome/free-solid-svg-icons";
 
 import Card from "./Card.component";
@@ -34,7 +38,7 @@ export default function ProjectsSection() {
     <Section title={info.title} icon={info.icon} description={info.description}>
       <div className="flex flex-wrap gap-3 justify-around">
         <Card
-          image={unitoLogo}
+          icon={faGraduationCap}
           alt="University"
           label="University"
           classes="w-[9em] h-[9em]"
@@ -42,14 +46,14 @@ export default function ProjectsSection() {
         />
         <Card icon={faComputer} label="Work" onClick={() => handleClick('/projects/1')}  />
         <Card
-          image={oltrevitaImage}
+          icon={faStamp}
           alt="Scholarships"
           label="Scholarships"
           classes="w-[10em] h-[3em]"
           onClick={() => handleClick('/projects/2')} 
         />
 
-        <Card icon={faPencil} label="Freetime" onClick={() => handleClick('/projects/3')} />
+        <Card icon={faLaptop} label="Freetime" onClick={() => handleClick('/projects/3')} />
       </div>
     </Section>
   );

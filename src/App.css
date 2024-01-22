@@ -5,8 +5,14 @@ body {
 
 .presentationBackground {
     background-image: url('./assets/images/portfolio-background.png');
-    background-size: cover; /* Adjust as needed */
-    background-repeat: no-repeat; /* Adjust as needed */
+    background-size: cover;
+    background-repeat: no-repeat; 
+}
+
+.myImage {
+    background-image: url('./assets/images/AlessandroMancuso2.jpg');
+    background-size: cover;
+    background-repeat: no-repeat; 
 }
 
 /* WebKit (Chrome, Safari) */

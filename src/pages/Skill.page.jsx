@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+
 import Sidebar from "../components/Sidebar.component";
+import Loader from "../components/Loader.component";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -45,8 +47,8 @@ export default function Skill(props) {
     // Scroll to top
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
-    });    
+      behavior: "smooth",
+    });
   }, []);
 
   const id = params.id;
@@ -138,7 +140,8 @@ export default function Skill(props) {
     {
       id: 1,
       title: "Design",
-      description: "Discover my passion for creating user-centered and visually appealing experiences. This section provides information about my skills and my methodical and creative approach to UI design and my commitment to creating functional and visually appealing designs.",
+      description:
+        "Discover my passion for creating user-centered and visually appealing experiences. This section provides information about my skills and my methodical and creative approach to UI design and my commitment to creating functional and visually appealing designs.",
       fields: [
         {
           id: 0,
@@ -192,11 +195,17 @@ export default function Skill(props) {
         },
       ],
     },
-    { id: 2, title: "Problem Solving", description: ""},
+    {
+      id: 2,
+      title: "Problem Solving",
+      description:
+        "I'm a programmer with a knack for problem-solving and analytical thinking. Whether it's untangling code knots or optimizing algorithms, I approach challenges systematically. I excel at breaking down complex problems, anticipating obstacles, and delivering effective and sustainable solutions. My commitment to staying updated with the latest technologies ensures that I bring a well-rounded problem-solving toolkit to every project.",
+    },
     {
       id: 3,
       title: " Teamwork & Communication",
-      description: "",
+      description:
+        "Discover my communication and task management skills. In this section you will be able to analyse my strengths in the area of teamwork to achieve common goals. Here you will also find an overview of my language skills.",
       fields: [
         {
           id: 0,
@@ -205,22 +214,32 @@ export default function Skill(props) {
             {
               id: 0,
               title: "Good at both team and independent activities",
+              description:
+                "I can work effectively autonomously, in work groups or in teams by splitting up tasks, my preferred working strategy is a hybrid of these.",
             },
             {
               id: 1,
               title: "Great communication skills",
+              description:
+                "I am able to accurately communicate ideas or solutions while always prioritising any future developments.",
             },
             {
               id: 2,
               title: "Brainstorming",
+              description:
+                "I am able to participate in brainstorming sessions by proposing my own ideas and listening carefully to those of others.",
             },
             {
               id: 3,
               title: "Able to work in Agile Envinronment",
+              description:
+                "I am adept at working in Agile environments. My proactive approach ensures smooth integration into iterative processes, facilitating efficient project delivery and continuous improvement.",
             },
             {
               id: 4,
               title: "Proactive and motivated",
+              description:
+                "My aim is always to achieve my goals with quality solutions. I am open to devote time, effort and determination to projects in which I feel a part of and involved in.",
             },
           ],
         },
@@ -260,6 +279,27 @@ export default function Skill(props) {
     },
   ];
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading data or images
+    const fetchData = async () => {
+      // Perform your data fetching or component loading logic here
+      // For example, loading images with `img` elements
+      // const image = new Image();
+      // image.src = 'your-image-url';
+      // await image.onload;
+
+      // Simulate a loading delay of at least 3 seconds
+      setTimeout(() => {
+        // Set loading to false when done
+        setIsLoading(false);
+      }, 1000);
+    };
+
+    fetchData();
+  }, []); // Empty dependency array ensures useEffect runs only once on component mount
+
   const [skill, setSkill] = useState(skills.find((skill) => skill?.id == id));
 
   const getIcon = (level) => {
@@ -288,23 +328,34 @@ export default function Skill(props) {
     </div>
   );
 
-  const contextSection = ({ title, languages, fourCols }) => (
-    <div className="flex flex-1 flex-col">
+  const contextSection = ({ title, description, languages, fourCols }) => (
+    <div className="flex flex-1 flex-col my-2">
       <span className="text-[#b898f6] text-lg">{title}</span>
 
-      <div className="flex flex-wrap gap-5 my-5">
-        {languages?.map((language) =>
-          languageSection({ ...language, fourCols: fourCols ? fourCols : null })
-        )}
-      </div>
+      {description && <span className="text-[#fff] mt-2">{description}</span>}
+
+      {languages && (
+        <div className="flex flex-wrap gap-5 my-5">
+          {languages?.map((language) =>
+            languageSection({
+              ...language,
+              fourCols: fourCols ? fourCols : null,
+            })
+          )}
+        </div>
+      )}
     </div>
   );
 
   const languageSection = ({ title, image, level, fourCols }) => (
-    <div className={`flex ${fourCols ? "w-[8em]" : "w-[9em] sm:w-[12em]"} gap-3 my-2 `}>
+    <div
+      className={`flex ${
+        fourCols ? "w-[8em]" : "w-[9em] sm:w-[12em]"
+      } gap-3 my-2 `}
+    >
       {image && <img src={image} className="w-[2.5em] h-[2.5em]" />}
       <div className="flex flex-col justify-center">
-        <span className="text-[#b898f6] text-md">
+        <span className="text-[#fff] text-md">
           {title} <FontAwesomeIcon icon={getIcon(level)} size="xs" />
           {level === "Very Good" && (
             <FontAwesomeIcon icon={getIcon(level)} size="xs" className="ml-1" />
@@ -323,9 +374,7 @@ export default function Skill(props) {
       </div>
       <hr className="border-[1px] border-[#8C52FF]" />
 
-      <span className="text-white text-lg">
-        { skill.description }
-      </span>
+      <span className="text-white text-lg">{skill.description}</span>
     </>
   );
 
@@ -333,15 +382,24 @@ export default function Skill(props) {
     <>{skill?.fields?.map((field) => fieldSection(field))}</>
   );
 
-  return (
+  const content = (
     <div className="p-10 sm:p-0">
       <Sidebar activeTab={4} isNotHome />
 
       <div className="w-full flex flex-col justify-center sm:pl-[15em] sm:pr-[10em] pt-[2em] sm:pt-[5em] pb-[5em] gap-5">
         {skillDescriptionSection}
 
-        <div className="w-full py-[3em] flex flex-col sm:flex-row gap-5">{skillFielsSection}</div>
+        <div className="w-full py-[1em] flex flex-col sm:flex-row gap-5">
+          {skillFielsSection}
+        </div>
       </div>
     </div>
+  );
+
+  return (
+    <>
+      {content}
+      {isLoading && <Loader />}
+    </>
   );
 }
